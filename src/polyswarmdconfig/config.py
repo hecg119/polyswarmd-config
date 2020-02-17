@@ -51,9 +51,9 @@ class Config:
     @classmethod
     def correct_type(cls, key: str, value: Any) -> Any:
         cast = typing.get_type_hints(cls).get(key)
-        if cast and cast in [int, bool]:
+        if cast and cast in [int, str, bool]:
             return cast(value)
-        elif cast and cast in [str]:
+        elif cast and cast in [list]:
             return cls._attempt_to_extract_list(value)
         else:
             return value
@@ -95,7 +95,4 @@ class Config:
     @staticmethod
     def _attempt_to_extract_list(value):
         items_delimiter = ','
-        if items_delimiter in value:
-            return list(map(str.strip, value.split(items_delimiter)))
-        else:
-            return value
+        return list(map(str.strip, value.split(items_delimiter)))

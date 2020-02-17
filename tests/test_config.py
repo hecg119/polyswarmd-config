@@ -79,8 +79,8 @@ def test_set_list_value():
     os.environ['TEST_LIST_OF_STRING'] = 'moe, larry, curly'
     config = {}
     test = Test.from_dict_and_environment(config)
-    #assert isinstance(tests.list_of_string, list)
-    #assert tests.list_of_string == ['moe', 'larry', 'curly']
+    assert isinstance(test.list_of_string, list)
+    assert test.list_of_string == ['moe', 'larry', 'curly']
 
 
 def test_wipes_out_value():
