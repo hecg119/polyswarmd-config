@@ -39,7 +39,7 @@ def test_does_not_change_other_values():
 
 def test_replaces_value_with_dict():
     os.environ['SUBCONFIGTEST_ARTIFACT_LIBRARY_MODULE'] = "ipfs"
-    config = {'artifact': {'library': 'test'}}
+    config = {'artifact': {'library': 'tests'}}
     SubConfigTest.overlay_environment(config)
     assert config == {'artifact': {'library': {'module': 'ipfs'}}}
 
@@ -68,11 +68,19 @@ def test_set_int_value():
 
 
 def test_set_str_value():
-    os.environ['TEST_PATH'] = 'test'
+    os.environ['TEST_PATH'] = 'tests'
     config = {}
     test = Test.from_dict_and_environment(config)
     assert isinstance(test.path, str)
-    assert test.path == 'test'
+    assert test.path == 'tests'
+
+
+def test_set_list_value():
+    os.environ['TEST_LIST_OF_STRING'] = 'moe, larry, curly'
+    config = {}
+    test = Test.from_dict_and_environment(config)
+    assert isinstance(test.list_of_string, list)
+    assert test.list_of_string == ['moe', 'larry', 'curly']
 
 
 def test_wipes_out_value():

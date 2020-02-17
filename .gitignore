@@ -76,3 +76,6 @@ ENV/
 
 # editor detritus
 .vscode/
+
+.idea
+

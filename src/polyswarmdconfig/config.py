@@ -9,6 +9,7 @@ from typing import Any, Dict, Tuple, Union
 
 from polyswarmdconfig.exceptions import MissingConfigValueError
 
+
 logger = logging.getLogger(__name__)
 
 
@@ -52,6 +53,8 @@ class Config:
         cast = typing.get_type_hints(cls).get(key)
         if cast and cast in [int, str, bool]:
             return cast(value)
+        elif cast and cast in [list]:
+            return cls._attempt_to_extract_list(value)
         else:
             return value
 
@@ -88,3 +91,8 @@ class Config:
         title = separated[0].lower()
         rest = separated[1] if len(separated) > 1 else ''
         return title, rest
+
+    @staticmethod
+    def _attempt_to_extract_list(value):
+        items_delimiter = ','
+        return list(map(str.strip, value.split(items_delimiter)))
