@@ -23,9 +23,9 @@ def test_consul_uri_set():
 def test_consul_token_set():
     config = {
         'uri': 'http://consul:8500',
-        'token': 'test-token'
+        'token': 'tests-token'
     }
     consul = Consul.from_dict(config)
     assert consul.client is not None
-    assert consul.token == 'test-token'
-    assert consul.client.token == 'test-token'
+    assert consul.token == 'tests-token'
+    assert consul.client.token == 'tests-token'
