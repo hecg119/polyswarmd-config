@@ -35,7 +35,6 @@ class Config:
     @classmethod
     def populate(cls, config: Dict[str, Any]) -> Dict[str, Any]:
         module = sys.modules[cls.__module__]
-        logger.critical(module.__name__)
         return {k: cls.get_value(k, v, module) for k, v in config.items() if typing.get_type_hints(cls).get(k)}
 
     @classmethod
