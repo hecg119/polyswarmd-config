@@ -108,6 +108,26 @@ def test_set_multi_word_value():
     }
 
 
+def test_fill_out_full_test_environment():
+    os.environ['SUBCONFIGTEST_ARTIFACT_MAX_SIZE'] = "10"
+    os.environ['SUBCONFIGTEST_ARTIFACT_LIBRARY_MODULE'] = "tests"
+    os.environ['SUBCONFIGTEST_ARTIFACT_LIBRARY_CLASS_NAME'] = "TestArtifactServiceClient"
+    os.environ['SUBCONFIGTEST_REDIS_URI'] = "redis://redis:6379"
+    os.environ['SUBCONFIGTEST_AUTH_URI'] = "http://auth:5000"
+    os.environ['SUBCONFIGTEST_CONSUL_URI'] = "http://consul:8500"
+
+    test = SubConfigTest.from_dict_and_environment({})
+    assert test.auth.uri is not None
+    assert test.redis.uri is not None
+    assert isinstance(test.redis.client, Redis)
+    assert isinstance(test.artifact, Artifact)
+    assert isinstance(test.artifact.library.client, TestArtifactServiceClient)
+    assert isinstance(test.consul.client, Consul)
+    assert test.enabled
+    assert test.path == ''
+    assert test.number == 0
+
+
 def test_fill_out_full_test():
     config = {
         'artifact': {
@@ -128,6 +148,7 @@ def test_fill_out_full_test():
     }
     test = SubConfigTest.from_dict(config)
     assert test.auth.uri is not None
+    assert test.redis.uri is not None
     assert isinstance(test.redis.client, Redis)
     assert isinstance(test.artifact, Artifact)
     assert isinstance(test.artifact.library.client, TestArtifactServiceClient)
