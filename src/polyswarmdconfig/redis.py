@@ -12,5 +12,6 @@ class Redis(Config):
     client: Optional[RedisClient] = dataclasses.field(init=False, default=None)
 
     def __post_init__(self):
+
         if self.uri:
             self.client = RedisClient.from_url(self.uri)
