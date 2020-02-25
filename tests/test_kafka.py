@@ -5,7 +5,7 @@ from unittest.mock import patch, MagicMock
 
 
 def test_kafka_producer_created():
-    test_brokers = ['kafka:9092']
+    test_brokers = ['kafka1:9092', 'kafka2:9092']
     with patch.object(KafkaProducer, '__init__', return_value=None) as mock_producer:
         config = {
             'brokers': test_brokers
