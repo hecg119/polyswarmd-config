@@ -12,4 +12,4 @@ COPY pytest.ini setup.py README.md ./
 COPY src src
 COPY tests tests
 
-RUN pip install /app
+RUN pip install .
