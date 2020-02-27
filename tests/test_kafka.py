@@ -14,7 +14,7 @@ def test_kafka_client_created():
             'use_geenlets': test_use_greenlets
         }
         Kafka.from_dict(config)
-        mock_client.assert_called_once_with(hosts=test_brokers, use_geenlets=test_use_greenlets)
+        mock_client.assert_called_once_with(hosts=str.encode(test_brokers), use_geenlets=test_use_greenlets)
 
 
 def test_kafka_client_not_created():
