@@ -8,7 +8,7 @@ from polyswarmdconfig.config import Config
 
 @dataclasses.dataclass
 class Kafka(Config):
-    brokers: Optional[str] = dataclasses.field(default_factory=list)
+    brokers: Optional[str] = None
     use_greenlets: Optional[bool] = True
     client: Optional[KafkaClient] = dataclasses.field(init=False, default=None)
 
