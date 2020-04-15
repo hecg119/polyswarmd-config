@@ -63,7 +63,7 @@ class AbstractArtifactServiceClient(ABC):
         raise NotImplementedError()
 
     @abstractmethod
-    def get_artifact(self, identifier, index, session, max_size=None, redis=None):
+    def get_artifact(self, identifier, index, session, max_size=None, redis=None, as_url=False) -> bytes:
         """
         Get the artifact at the given identifer and index
 
@@ -72,6 +72,7 @@ class AbstractArtifactServiceClient(ABC):
         :param session: connection session
         :param max_size: optional max size of files to get
         :param redis: redis connection for reading from cache contents
+        :param as_url: content will be an URL containing the payload, instead of the payload directly
         :return: (bytes) Byte content of the given file
         :raises ArtifactServiceException: If service is unreachable or gives non-200 response
         """
