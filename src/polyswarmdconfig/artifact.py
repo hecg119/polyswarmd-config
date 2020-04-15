@@ -39,6 +39,7 @@ class Artifact(Config):
     limit: int = 256
     fallback_max_size: int = DEFAULT_FALLBACK_SIZE
     max_size: int = DEFAULT_FALLBACK_SIZE
+    download_as_url: bool = True
 
     def __post_init__(self):
         if self.limit < 1 or self.limit > 256:
