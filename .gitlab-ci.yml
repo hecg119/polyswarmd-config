@@ -62,7 +62,19 @@ test-py35:
 ###############################################################
 # Release Stage
 ###############################################################
-release:
+release-latest:
+  stage: release
+  tags:
+    - kube
+  script:
+    - docker pull $REPO_URL/$BASE_IMAGE_NAME:$CI_COMMIT_SHA
+    - docker tag $REPO_URL/$BASE_IMAGE_NAME:$CI_COMMIT_SHA $REPO_URL/$BASE_IMAGE_NAME:latest
+    - docker push $REPO_URL/$BASE_IMAGE_NAME:latest
+  only:
+    - master
+
+
+release-pypi:
   stage: release
   tags:
     - kube
