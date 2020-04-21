@@ -59,6 +59,30 @@ def test_set_bool_value():
     assert test.enabled
 
 
+def test_set_bool_value_empty():
+    os.environ['TEST_ENABLED'] = ''
+    config = {'enabled': True}
+    test = Test.from_dict_and_environment(config)
+    assert isinstance(test.enabled, bool)
+    assert not test.enabled
+
+
+def test_set_bool_value_0():
+    os.environ['TEST_ENABLED'] = '0'
+    config = {'enabled': True}
+    test = Test.from_dict_and_environment(config)
+    assert isinstance(test.enabled, bool)
+    assert not test.enabled
+
+
+def test_set_bool_value_false():
+    os.environ['TEST_ENABLED'] = 'FALSE'
+    config = {'enabled': True}
+    test = Test.from_dict_and_environment(config)
+    assert isinstance(test.enabled, bool)
+    assert not test.enabled
+
+
 def test_set_int_value():
     os.environ['TEST_NUMBER'] = '10'
     config = {}

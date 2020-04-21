@@ -50,8 +50,10 @@ class Config:
     @classmethod
     def correct_type(cls, key: str, value: Any) -> Any:
         cast = typing.get_type_hints(cls).get(key)
-        if cast and cast in [int, str, bool]:
+        if cast and cast in [int, str]:
             return cast(value)
+        elif cast and cast in [bool]:
+            return cls._attempt_to_extract_bool(value)
         elif cast and cast in [list]:
             return cls._attempt_to_extract_list(value)
         else:
@@ -90,6 +92,13 @@ class Config:
         title = separated[0].lower()
         rest = separated[1] if len(separated) > 1 else ''
         return title, rest
+
+    @staticmethod
+    def _attempt_to_extract_bool(value):
+        if isinstance(value, str):
+            return value.lower() not in ('false', '0', '')
+        else:
+            return bool(value)
 
     @staticmethod
     def _attempt_to_extract_list(value):
