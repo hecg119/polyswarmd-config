@@ -114,9 +114,13 @@ rebuild-polyswarmd-fast-artifacts:
   only:
     - master
   trigger: externalci/polyswarmd-fast-artifacts
+  variables:
+    BASE_IMAGE_NAME: polyswarmd-fast-artifacts
 
 rebuild-polyswarmd-fast-events:
   stage: trigger
   only:
     - master
   trigger: externalci/polyswarmd-fast-events
+  variables:
+    BASE_IMAGE_NAME: polyswarmd-fast-events
