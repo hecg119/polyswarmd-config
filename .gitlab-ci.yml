@@ -7,6 +7,7 @@ stages:
   - build
   - test
   - release
+  - trigger
 
 variables:
   DOCKER_HOST: tcp://localhost:2375/
@@ -102,3 +103,24 @@ release-pypi:
     - docker tag $REPO_URL/$BASE_IMAGE_NAME:$CI_COMMIT_SHA $REPO_URL/$BASE_IMAGE_NAME:latest
     # Pushes to AWS
     - docker push $REPO_URL/$BASE_IMAGE_NAME:latest
+
+
+###############################################################
+# Trigger other CI builds
+###############################################################
+
+rebuild-polyswarmd-fast-artifacts:
+  stage: trigger
+  only:
+    - master
+  trigger: externalci/polyswarmd-fast-artifacts
+  variables:
+    BASE_IMAGE_NAME: polyswarmd-fast-artifacts
+
+rebuild-polyswarmd-fast-events:
+  stage: trigger
+  only:
+    - master
+  trigger: externalci/polyswarmd-fast-events
+  variables:
+    BASE_IMAGE_NAME: polyswarmd-fast-events
