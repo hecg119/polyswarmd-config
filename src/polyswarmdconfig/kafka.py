@@ -8,8 +8,8 @@ from polyswarmdconfig.config import Config
 
 @dataclasses.dataclass
 class Kafka(Config):
-    brokers: Optional[str] = None
-    use_greenlets: Optional[bool] = True
+    brokers: str = ''
+    use_greenlets: bool = True
     client: Optional[KafkaClient] = dataclasses.field(init=False, default=None)
 
     def __post_init__(self):
