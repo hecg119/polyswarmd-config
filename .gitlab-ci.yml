@@ -33,22 +33,6 @@ dev-pypi:
     - python setup.py -q bdist_wheel
     - twine upload --skip-existing --disable-progress-bar --non-interactive dist/*
 
-build-linux:
-  stage: build
-  tags:
-    - kube
-  script:
-    - docker pull $REPO_URL/$BASE_IMAGE_NAME:latest || true
-    - docker build
-      --pull
-      -f docker/Dockerfile
-      -t $REPO_URL/$BASE_IMAGE_NAME:$CI_COMMIT_SHA
-      -t $REPO_URL/$BASE_IMAGE_NAME:$CI_COMMIT_REF_SLUG
-      --cache-from=$REPO_URL/$BASE_IMAGE_NAME:latest
-      .
-    - docker push $REPO_URL/$BASE_IMAGE_NAME:$CI_COMMIT_SHA
-    - docker push $REPO_URL/$BASE_IMAGE_NAME:$CI_COMMIT_REF_SLUG
-
 ###############################################################
 # Test Stage
 ###############################################################
@@ -79,17 +63,6 @@ test-py35:
 ###############################################################
 # Release Stage
 ###############################################################
-release-latest:
-  stage: release
-  tags:
-    - kube
-  script:
-    - docker pull $REPO_URL/$BASE_IMAGE_NAME:$CI_COMMIT_SHA
-    - docker tag $REPO_URL/$BASE_IMAGE_NAME:$CI_COMMIT_SHA $REPO_URL/$BASE_IMAGE_NAME:latest
-    - docker push $REPO_URL/$BASE_IMAGE_NAME:latest
-  only:
-    - master
-
 release-pypi:
   tags:
     - kube
@@ -108,19 +81,3 @@ release-pypi:
 ###############################################################
 # Trigger other CI builds
 ###############################################################
-
-rebuild-polyswarmd-fast-artifacts:
-  stage: trigger
-  only:
-    - master
-  trigger: externalci/polyswarmd-fast-artifacts
-  variables:
-    BASE_IMAGE_NAME: polyswarmd-fast-artifacts
-
-rebuild-polyswarmd-fast-events:
-  stage: trigger
-  only:
-    - master
-  trigger: externalci/polyswarmd-fast-events
-  variables:
-    BASE_IMAGE_NAME: polyswarmd-fast-events
