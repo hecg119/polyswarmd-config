@@ -78,4 +78,5 @@ ENV/
 .vscode/
 
 .idea
-
+e2e.yaml
+docker-compose.yaml
