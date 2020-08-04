@@ -15,4 +15,5 @@ class Kafka(Config):
     def __post_init__(self):
         if self.brokers:
             self.client = KafkaClient(hosts=self.brokers,
-                                      use_greenlets=self.use_greenlets)
+                                      use_greenlets=self.use_greenlets,
+                                      broker_version='1.1.1')
