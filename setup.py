@@ -12,7 +12,7 @@ setup(
     install_requires=[
         'dataclasses==0.7; python_version=="3.6"',
         'python-consul==1.1.0',
-        'redis==3.4.1',
+        'redis>=3.5.3',
     ],
     include_package_data=True,
     packages=find_packages('src'),
