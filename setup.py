@@ -3,7 +3,7 @@ from setuptools import find_packages, setup
 
 setup(
     name='polyswarmd-config',
-    version='0.1.0',
+    version='0.1.1',
     description='Config module the PolySwarm Daemon',
     author='PolySwarm Developers',
     author_email='info@polyswarm.io',
